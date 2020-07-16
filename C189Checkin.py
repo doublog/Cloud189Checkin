@@ -1,22 +1,23 @@
-import requests, time, re, rsa, json, base64
+import requests, time, re, rsa, json, base64, os
 from urllib import parse
 
 s = requests.Session()
-
-username = ""
-password = ""
+env_dist = os.environ
+username = env_dist.get("USERNAME", "")
+password = env_dist.get("PASSWORD", "")
 
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
-SCKEY = ""
+SCKEY = env_dist.get("SCKEY", "")
 #推送url
 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
+notes = ""
 
-if(username == "" or password == ""):
-    username = input("账号：")
-    password = input("密码：")
+if(username == "USERNAME" or password == "PASSWORD" or username == "" or password == ""):
+    raise Exception(f"Need USERNAME/PASSWORD!")
 
 def main():
+    global notes
     msg = login(username, password)
     if(msg == "error"):
         return None
@@ -37,8 +38,10 @@ def main():
     netdiskBonus = response.json()['netdiskBonus']
     if(response.json()['isSign'] == "false"):
         print(f"未签到，签到获得{netdiskBonus}M空间")
+        notes += f"未签到，签到获得{netdiskBonus}M空间\n\n"
     else:
         print(f"已经签到过了，签到获得{netdiskBonus}M空间")
+        notes += f"已经签到过了，签到获得{netdiskBonus}M空间\n\n"
     headers = {
         'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
         "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -50,6 +53,7 @@ def main():
     if ("errorCode" in response.text):
         if(response.json()['errorCode'] == "User_Not_Chance"):
             print("抽奖次数不足")
+            notes += "抽奖次数不足\n\n"
         else:
             print(response.text)
             if(SCKEY != ""):
@@ -60,12 +64,14 @@ def main():
                 sc = requests.post(scurl, data=data)
     else:
         description = response.json()['description']
-        print(f"抽奖获得{description}")
+        print(f"第一次抽奖获得{description}")
+        notes += f"第一次抽奖获得{description}\n\n"
     #第二次抽奖
     response = s.get(url2,headers=headers)
     if ("errorCode" in response.text):
         if(response.json()['errorCode'] == "User_Not_Chance"):
             print("抽奖次数不足")
+            notes += "抽奖次数不足\n\n"
         else:
             print(response.text)
             if(SCKEY != ""):
@@ -76,7 +82,10 @@ def main():
                 sc = requests.post(scurl, data=data)
     else:
         description = response.json()['description']
-        print(f"抽奖获得{description}")
+        print(f"第二次抽奖获得{description}")
+        notes += f"第二次抽奖获得{description}\n\n"
+    notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes)
 
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
@@ -151,7 +160,9 @@ def login(username, password):
         }
     r = s.post(url, data=data, headers=headers, timeout=5)
     if(r.json()['result'] == 0):
+        global notes
         print(r.json()['msg'])
+        notes += r.json()['msg'] + "\n\n"
     else:
         if(SCKEY == ""):
             print(r.json()['msg'])
@@ -167,8 +178,14 @@ def login(username, password):
     redirect_url = r.json()['toUrl']
     r = s.get(redirect_url)
     return s
-    
+
+def scmsg(text, desp):
+    if(SCKEY != ""):
+        data = {
+            "text" : text,
+            "desp" : desp
+            }
+        sc = requests.post(scurl, data=data)
 
 if __name__ == "__main__":
     main()
-
