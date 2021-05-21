@@ -4,6 +4,7 @@ import re
 import requests
 import rsa
 import time
+import telegram
 
 s = requests.Session()
 env_dist = os.environ
@@ -90,7 +91,10 @@ def main():
         notes += f"第二次抽奖获得{description}\n\n"
     notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
-
+    
+# 尝试使用tgbot
+bot = telegram.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
+bot.send_message(chat_id=432648509, text=str(notes))
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
