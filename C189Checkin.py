@@ -12,10 +12,6 @@ username = env_dist.get("USERNAME", "")
 password = env_dist.get("PASSWORD", "")
 
 
-#尝试使用telepot
-bot = telepot.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.sendMessage(432648509, notes = "")
-
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
 SCKEY = env_dist.get("SCKEY", "")
 #推送url
@@ -94,8 +90,14 @@ def main():
         print(f"第二次抽奖获得{description}")
         notes += f"第二次抽奖获得{description}\n\n"
     notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes)
+    scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
 
+tgmsg = notes
+
+#尝试使用telepot
+bot = telepot.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
+bot.sendMessage(432648509, tgmsg)
+    
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
     return BI_RM[a]
