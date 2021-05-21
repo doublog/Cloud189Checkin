@@ -3,7 +3,7 @@ import os
 import re
 import requests
 import rsa
-import telepot
+import python-telegram-bot
 import time
 
 s = requests.Session()
@@ -92,11 +92,9 @@ def main():
     notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
 
-tgmsg = notes
-
-#尝试使用telepot
+#尝试使用tgbot
 bot = telepot.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.sendMessage(432648509, tgmsg)
+bot.send_message(chat_id = 432648509, text = notes)
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
