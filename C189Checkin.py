@@ -3,7 +3,7 @@ import os
 import re
 import requests
 import rsa
-import telepot
+import python-telegram-bot
 import time
 
 s = requests.Session()
@@ -14,7 +14,7 @@ password = env_dist.get("PASSWORD", "")
 
 #尝试使用telebot
 bot = telepot.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.sendMessage(432648509, notes)
+bot.send_message(chat_id ='432648509', text = notes)
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
 SCKEY = env_dist.get("SCKEY", "")
