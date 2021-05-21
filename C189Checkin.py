@@ -93,8 +93,8 @@ def main():
     scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
     
 # 尝试使用tgbot
-bot = telegram.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.send_message(chat_id=432648509, text=str(notes))
+#bot = telegram.Bot('这里是token')
+#bot.send_message(chat_id=??, text=str(notes))
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
