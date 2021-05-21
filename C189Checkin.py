@@ -3,7 +3,7 @@ import os
 import re
 import requests
 import rsa
-import python-telegram-bot
+import telegram
 import time
 
 s = requests.Session()
