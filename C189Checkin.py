@@ -14,7 +14,7 @@ password = env_dist.get("PASSWORD", "")
 
 #尝试使用telepot
 bot = telepot.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.sendMessage(432648509, notes)
+bot.sendMessage(432648509, notes = "")
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
 SCKEY = env_dist.get("SCKEY", "")
