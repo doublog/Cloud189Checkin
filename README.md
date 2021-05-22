@@ -84,7 +84,7 @@ docker image ls
 docker rmi image ID
 ```
 此时系统会提示你
->Error response from daemon: conflict: unable to delete 一串image ID (must be forced) - image is being used by stopped container 一串container ID
+>Error response from daemon: conflict: unable to delete 一串image ID (must be forced) - image is being used by stopped container 一串container ID <br>
 复制下最后的container ID
 
 ## 4.2 设置定时任务
@@ -96,7 +96,7 @@ crontab -e
 ```
 00 09 * * * docker start 你的containerID
 ```
-此任务的含义是在每天早上9点执行签到任务
+此任务的含义是在每天早上9点执行签到任务<br>
 
 重启crond守护进程（每次编辑定时任务后都需此步，以使任务生效，或者简单除暴直接reboot）
 ```
@@ -109,8 +109,8 @@ docker start 你的containerID
 ```
 来运行该签到
 
-
-
+<br>
+<br>
 
 使用群晖任务计划实现定时每日定时签到
 -----
