@@ -5,7 +5,10 @@
 1.测试环境为python3.7.6,自行安装python3<br>
 2.requirements.txt 是所需第三方模块，执行 `pip install -r requirements.txt` 安装模块<br>
 3.可在脚本内直接填写账号密码<br>
-4.Python 和需要模块都装好了直接在目录 cmd 运行所要运行的脚本。<br>
+4.Python 和需要模块都装好了直接在目录 cmd 运行所要运行的脚本。
+*****
+5.新增telegram bot通知（无法提示签到成功与否）
+6.新增docker定时运行<br>
 <br>
 <br>
 
@@ -13,13 +16,20 @@
 > [Cloud189](https://github.com/Dawnnnnnn/Cloud189)
 > [cloud189](https://github.com/Aruelius/cloud189)
 
+
+# 前期工作
+首先把我的这个项目fork到你自己的仓库中，然后点进 C189Checkin.py 文件进行修改
+需要修改的主要是你的天翼云账户密码、微信server酱的sendkey（选填），电报bot的token和user id（也是选填，不需要就直接留空）
+具体修改内容请看其后的注释
+由于我太菜，电报通知没法显示签到成功没有，只能告诉你签到运行了一次……
+
 # 在Docker中使用
 
 1.获取文件到本地
 ----
 
 ```zsh
-git clone https://github.com/L-Trump/Cloud189Checkin.git
+git clone https://github.com/ChellyL/Cloud189Checkin.git
 cd Cloud189Checkin
 ```
 
@@ -36,13 +46,20 @@ docker build -t yourname/cloud189checkin .
 -----
 
 ```zsh
-docker run -e USERNAME="你的账号" -e PASSWORD="你的密码" -e SCKEY="你的Server酱KEY" -it yourname/cloud189checkin
+docker run -it yourname/cloud189checkin
 ```
 
-注：如果不需要推送可以忽略`-e SCKEY="你的Server酱KEY"`
-
-4.定时任务
+4.定时任务（可选）
 -----
+在设置定时任务之前先确认你的vps的时区和系统时间：
+```
+date
+```
+如何不是东八区时间，建议修改
+```
+timedatectl set-timezone Asia/Shanghai
+```
+这样方便我们设置定时运行的时间（我之前没注意这点vps一直是美国东海岸时区，所有设定的运行时间都和实际时间差了12小时……）
 ## 4.1 安装并启动crondtab
 首先要安装crontab，已安装的朋友可跳过
 ```
@@ -56,6 +73,20 @@ yum list cronie && systemctl status crond
 ```
 yum list crontabs $$ which crontab && crontab -l
 ```
+## 查找dockers的container id
+输入以下指令：
+```
+docker image ls
+```
+找到yourname/cloud189checkin对应的 image ID
+接着尝试删除它：
+```
+docker rmi image ID
+```
+此时系统会提示你
+>Error response from daemon: conflict: unable to delete 一串image ID (must be forced) - image is being used by stopped container 一串container ID
+复制下最后的container ID
+
 ## 4.2 设置定时任务
 打开任务表单，并编辑：
 ```
@@ -63,15 +94,20 @@ crontab -e
 ```
 按i进入输入模式，输入如下内容后，按住esc键，输入:wq保持并退出编辑模式
 ```
-00 09 * * * docker run -e USERNAME="你的账号" -e PASSWORD="你的密码" -e SCKEY="你的Server酱KEY" -it yourname/cloud189checkin
+00 09 * * * docker start 你的containerID
 ```
 此任务的含义是在每天早上9点执行签到任务
-请记得自己替换相应的账户密码
 
-重启crond守护进程（每次编辑任务表单后都需此步，以使任务生效）
+重启crond守护进程（每次编辑定时任务后都需此步，以使任务生效，或者简单除暴直接reboot）
 ```
 systemctl restart crond
 ```
+
+知道了container ID 后也可以直接使用
+```
+docker start 你的containerID
+```
+来运行该签到
 
 
 
