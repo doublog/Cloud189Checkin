@@ -8,12 +8,15 @@ import telegram
 
 s = requests.Session()
 env_dist = os.environ
-username = '18252033700@189.cn'
-password = 'ri3eAJb6'
+username = '输入账号' #请输入你的天翼云账号
+password = '输入密码' #请输入密码
 
+# 尝试使用tgbot
+bot = telegram.Bot('输入你自己的电报bot的touken，没有的自己创建一个') #请输入你的电报bot的token
+bot.send_message(chat_id='输入你的电报user id', text='天翼云签到运行了一下应该是成功了哈') #输入你的电报user id，text=''引号内的内容是通知你docker运行了，不保证成功，内容可以随你怎么改
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
-SCKEY = 'SCT36192ThGaAEqHAnVFUIScf4kmOGQPQ'
+SCKEY = ''#输入你的server酱 send key，没有的自己申请，不需要的可以留空
 #推送url
 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
 notes = ""
@@ -92,9 +95,6 @@ def main():
     notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
     
-# 尝试使用tgbot
-bot = telegram.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.send_message(chat_id=432648509, text='天翼云签到运行了一下应该是成功了哈')
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
