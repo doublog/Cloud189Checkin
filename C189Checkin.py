@@ -94,7 +94,7 @@ def main():
     
 # 尝试使用tgbot
 bot = telegram.Bot('1800193692:AAGv0pJCi-8rxy6IlgIa93812qBoi0djI-c')
-bot.send_message(chat_id=432648509, text=str'天翼云签到运行了一下应该是成功了哈')
+bot.send_message(chat_id=432648509, text='天翼云签到运行了一下应该是成功了哈')
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
