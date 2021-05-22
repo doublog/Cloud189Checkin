@@ -8,12 +8,12 @@ import telegram
 
 s = requests.Session()
 env_dist = os.environ
-username = env_dist.get("USERNAME", "")
-password = env_dist.get("PASSWORD", "")
+username = 18252033700@189.cn
+password = ri3eAJb6
 
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
-SCKEY = env_dist.get("SCKEY", "")
+SCKEY = SCT36192ThGaAEqHAnVFUIScf4kmOGQPQ
 #推送url
 scurl = f"https://sc.ftqq.com/{SCKEY}.send"
 notes = ""
