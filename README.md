@@ -84,7 +84,8 @@ docker image ls
 docker rmi image ID
 ```
 此时系统会提示你
->Error response from daemon: conflict: unable to delete 一串image ID (must be forced) - image is being used by stopped container 一串container ID <br>
+>Error response from daemon: conflict: unable to delete 一串image ID (must be forced) - image is being used by stopped container 一串container ID
+>
 复制下最后的container ID
 
 ## 4.2 设置定时任务
