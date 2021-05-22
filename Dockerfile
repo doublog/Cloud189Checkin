@@ -1,4 +1,4 @@
-FROM python:3.7.6
+FROM python:3.9.5
 
 RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone
 
