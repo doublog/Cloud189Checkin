@@ -11,9 +11,6 @@ env_dist = os.environ
 username = '输入账号' #请输入你的天翼云账号
 password = '输入密码' #请输入密码
 
-# 尝试使用tgbot
-bot = telegram.Bot('') #请输入你的电报bot的token
-bot.send_message(chat_id='', text='天翼云签到运行了一下应该是成功了哈') #输入你的电报user id，text=''引号内的内容是通知你docker运行了，不保证成功，内容可以随你怎么改
 
 #Server酱报错推送提醒，需要填下下面的key，官网：https://sc.ftqq.com/3.version
 SCKEY = ''#输入你的server酱 send key，没有的自己申请，不需要的可以留空
@@ -46,10 +43,10 @@ def main():
     netdiskBonus = response.json()['netdiskBonus']
     if(response.json()['isSign'] == "false"):
         print(f"未签到，签到获得{netdiskBonus}M空间")
-        notes += f"未签到，签到获得{netdiskBonus}M空间\n\n"
+        notes += f"未签到，签到获得{netdiskBonus}M空间\n"
     else:
         print(f"已经签到过了，签到获得{netdiskBonus}M空间")
-        notes += f"已经签到过了，签到获得{netdiskBonus}M空间\n\n"
+        notes += f"已经签到过了，签到获得{netdiskBonus}M空间\n"
     headers = {
         'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
         "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -61,7 +58,7 @@ def main():
     if ("errorCode" in response.text):
         if(response.json()['errorCode'] == "User_Not_Chance"):
             print("抽奖次数不足")
-            notes += "抽奖次数不足\n\n"
+            notes += "抽奖次数不足\n"
         else:
             print(response.text)
             if(SCKEY != ""):
@@ -79,7 +76,7 @@ def main():
     if ("errorCode" in response.text):
         if(response.json()['errorCode'] == "User_Not_Chance"):
             print("抽奖次数不足")
-            notes += "抽奖次数不足\n\n"
+            notes += "抽奖次数不足\n"
         else:
             print(response.text)
             if(SCKEY != ""):
@@ -91,9 +88,12 @@ def main():
     else:
         description = response.json()['description']
         print(f"第二次抽奖获得{description}")
-        notes += f"第二次抽奖获得{description}\n\n"
+        notes += f"第二次抽奖获得{description}\n"
     notes += time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     scmsg("自动签到 " + time.strftime("%Y-%m-%d %H:%M", time.localtime()), notes) 
+    # 使用tgbot推送
+bot = telegram.Bot('') #请输入你的电报bot的token
+bot.send_message(chat_id='', text='天翼云签到：\n\n' + notes) #输入你的电报user id
     
     
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
