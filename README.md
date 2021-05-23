@@ -34,7 +34,8 @@ mkdir Cloud189Checkin
 cd Cloud189Checkin
 ```
 3.上传修改好的py文件到Cloud189Checkin文件夹中<br>
-关于如何上传，我用的filezilla的sftp功能，你也可将此项目fork到你的仓库后，修改py文件内容并保持， 然后运行命令：<br>
+关于如何上传，我用的filezilla的sftp功能，你也可将此项目fork到你的仓库后，修改py文件内容并保持，然后运行命令：<br>
+（要下载在Cloud189Checkin文件夹内）
 ```
 wget https://github.com/你的GitHub账号名/Cloud189Checkin/blob/master/C189Checkin.py
 ```
