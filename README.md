@@ -1,6 +1,6 @@
 # Cloud189Checkin
 
-天翼云盘每日签到一次，抽奖2次<br>
+vps版天翼云盘每日签到+抽奖<br>
 使用方法<br>
 1.使用vps运行，我个人使用的CentOS 7，其他Linux系统使用方式大同小异<br>
 2.测试环境为python3.9.5，如果没有安装或自带python2，建议自行安装python3<br>
