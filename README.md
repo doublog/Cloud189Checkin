@@ -37,7 +37,7 @@ cd Cloud189Checkin
 关于如何上传，我用的filezilla的sftp功能，你也可将此项目fork到你的仓库后，修改py文件内容并保持，然后运行命令：<br>
 （要下载在Cloud189Checkin文件夹内）
 ```
-wget https://github.com/你的GitHub账号名/Cloud189Checkin/blob/master/C189Checkin.py
+wget https://raw.githubusercontent.com/你的GitHub账号名/Cloud189Checkin/master/C189Checkin.py
 ```
 4.尝试运行脚本<br>
 ```
@@ -54,7 +54,7 @@ date
 ```
 timedatectl set-timezone Asia/Shanghai
 ```
-这样方便我们设置定时运行的时间（我之前没注意这点vps一直是美国东海岸时区，所有设定的运行时间都和实际时间差了12小时……）<br>
+这样方便我们设置定时运行的时间（我之前没注意这点vps一直是美西时区，所有设定的运行时间都和实际时间差了12小时……）<br>
 5.1 安装并启动crondtab<br>
 首先要安装crontab，已安装的朋友可跳过<br>
 ```
